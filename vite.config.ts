@@ -1,0 +1,36 @@
+import { defineConfig } from "vite";
+import react from '@vitejs/plugin-react-swc'
+import path from 'path'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import filenamesToType from './vitePluginFilenamesToType'
+
+// https://vitejs.dev/config/
+export default defineConfig(async () => ({
+  plugins: [
+    react(),
+    filenamesToType([
+      {
+        dictionary: './src/assets/icons',
+        typeFile: './src/components/Icon/iconNamesType.ts',
+      },
+    ]),
+    /**
+     * @see https://github.com/vbenjs/vite-plugin-svg-icons
+     */
+    createSvgIconsPlugin({
+      iconDirs: [path.resolve(process.cwd(), './src/assets/icons')],
+      symbolId: 'icon-[name]',
+    }),
+  ],
+ 
+
+  // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
+  //
+  // 1. prevent vite from obscuring rust errors
+  clearScreen: false,
+  // 2. tauri expects a fixed port, fail if that port is not available
+  server: {
+    port: 1420,
+    strictPort: true,
+  }
+}));
