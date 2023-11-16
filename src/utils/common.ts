@@ -125,16 +125,17 @@ export async function getCoverColor(coverUrl: string) {
     return
   }
 
-  const colorFromCache: string | undefined = await window.ipcRenderer?.invoke(
-    IpcChannels.GetApiCache,
-    {
-      api: CacheAPIs.CoverColor,
-      query: {
-        id,
-      },
-    }
-  )
-  return colorFromCache || calcCoverColor(coverUrl)
+  // const colorFromCache: string | undefined = await window.ipcRenderer?.invoke(
+  //   IpcChannels.GetApiCache,
+  //   {
+  //     api: CacheAPIs.CoverColor,
+  //     query: {
+  //       id,
+  //     },
+  //   }
+  // )
+  // return colorFromCache || calcCoverColor(coverUrl)
+  return calcCoverColor(coverUrl)
 }
 
 export async function cacheCoverColor(coverUrl: string, color: string) {
@@ -147,10 +148,10 @@ export async function cacheCoverColor(coverUrl: string, color: string) {
 
   if (!id || isNaN(Number(id))) return
 
-  window.ipcRenderer?.send(IpcChannels.CacheCoverColor, {
-    id: Number(id),
-    color,
-  })
+  // window.ipcRenderer?.send(IpcChannels.CacheCoverColor, {
+  //   id: Number(id),
+  //   color,
+  // })
 }
 
 export async function calcCoverColor(coverUrl: string) {

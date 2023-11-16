@@ -1,4 +1,4 @@
-import { fetchMV, fetchMVUrl, fetchVideoUrl, fetchVideo } from '@/web/api/mv'
+import { fetchMV, fetchMVUrl, fetchVideoUrl, fetchVideo } from '@/api/mv'
 import { IpcChannels } from '@/shared/IpcChannels'
 import {
   MVApiNames,

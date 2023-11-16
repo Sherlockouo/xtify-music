@@ -1,4 +1,4 @@
-import { fetchArtistMV } from '@/web/api/artist'
+import { fetchArtistMV } from '@/api/artist'
 import { IpcChannels } from '@/shared/IpcChannels'
 import { CacheAPIs } from '@/shared/CacheAPIs'
 import { FetchArtistMVParams, ArtistApiNames, FetchArtistMVResponse } from '@/shared/api/Artist'

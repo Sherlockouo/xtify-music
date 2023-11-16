@@ -1,4 +1,4 @@
-import { likeATrack } from '@/web/api/track'
+import { likeATrack } from '@/api/track'
 import useUser from './useUser'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { IpcChannels } from '@/shared/IpcChannels'
@@ -7,7 +7,7 @@ import { fetchUserLikedTracksIDs } from '../user'
 import { FetchUserLikedTracksIDsResponse, UserApiNames } from '@/shared/api/User'
 import { useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-import reactQueryClient from '@/web/utils/reactQueryClient'
+import reactQueryClient from '@/utils/reactQueryClient'
 
 export default function useUserLikedTracksIDs() {
   const { data: user } = useUser()
@@ -18,18 +18,18 @@ export default function useUserLikedTracksIDs() {
     key,
     () => {
       const existsQueryData = reactQueryClient.getQueryData(key)
-      if (!existsQueryData) {
-        window.ipcRenderer
-          ?.invoke(IpcChannels.GetApiCache, {
-            api: CacheAPIs.Likelist,
-            query: {
-              uid,
-            },
-          })
-          .then(cache => {
-            if (cache) reactQueryClient.setQueryData(key, cache)
-          })
-      }
+      // if (!existsQueryData) {
+      //   window.ipcRenderer
+      //     ?.invoke(IpcChannels.GetApiCache, {
+      //       api: CacheAPIs.Likelist,
+      //       query: {
+      //         uid,
+      //       },
+      //     })
+      //     .then(cache => {
+      //       if (cache) reactQueryClient.setQueryData(key, cache)
+      //     })
+      // }
 
       return fetchUserLikedTracksIDs({ uid })
     },

@@ -2,19 +2,19 @@ import { Howl, Howler } from 'howler'
 import {
   fetchAudioSourceWithReactQuery,
   fetchTracksWithReactQuery,
-} from '@/web/api/hooks/useTracks'
-import { fetchPersonalFMWithReactQuery } from '@/web/api/hooks/usePersonalFM'
-import { fmTrash } from '@/web/api/personalFM'
-import { cacheAudio } from '@/web/api/r3play'
+} from '@/api/hooks/useTracks'
+import { fetchPersonalFMWithReactQuery } from '@/api/hooks/usePersonalFM'
+import { fmTrash } from '@/api/personalFM'
+import { cacheAudio } from '@/api/r3play'
 import { clamp, random } from 'lodash-es'
 import axios from 'axios'
 import { resizeImage } from './common'
-import { fetchPlaylistWithReactQuery } from '@/web/api/hooks/usePlaylist'
-import { fetchAlbumWithReactQuery } from '@/web/api/hooks/useAlbum'
+import { fetchPlaylistWithReactQuery } from '@/api/hooks/usePlaylist'
+import { fetchAlbumWithReactQuery } from '@/api/hooks/useAlbum'
 import { IpcChannels } from '@/shared/IpcChannels'
 import { RepeatMode } from '@/shared/playerDataTypes'
 import toast from 'react-hot-toast'
-import { scrobble } from '@/web/api/user'
+import { scrobble } from '@/api/user'
 import { fetchArtistWithReactQuery } from '../api/hooks/useArtist'
 import { appName } from './const'
 
@@ -86,7 +86,7 @@ export class Player {
     this._initFM()
     this._initMediaSession()
 
-    window.ipcRenderer?.send(IpcChannels.Repeat, { mode: this._repeatMode })
+    // window.ipcRenderer?.send(IpcChannels.Repeat, { mode: this._repeatMode })
   }
 
   get howler() {
@@ -125,42 +125,42 @@ export class Player {
     }
   }
 
-  /*
-    @deprecated this will violate CORS rules
-  */
-  private getSongFFT() {
-    if (window.env === undefined) return
-    const audioCtx = new window.AudioContext()
-    const analyser = audioCtx.createAnalyser()
-    const source = audioCtx.createMediaElementSource((_howler as any)._sounds[0]._node)
+  // /*
+  //   @deprecated this will violate CORS rules
+  // */
+  // private getSongFFT() {
+  //   if (window.env === undefined) return
+  //   const audioCtx = new window.AudioContext()
+  //   const analyser = audioCtx.createAnalyser()
+  //   const source = audioCtx.createMediaElementSource((_howler as any)._sounds[0]._node)
 
-    if (!invoked) {
-      source.connect(analyser)
-      analyser.connect(audioCtx.destination)
-      invoked = !invoked
-    }
+  //   if (!invoked) {
+  //     source.connect(analyser)
+  //     analyser.connect(audioCtx.destination)
+  //     invoked = !invoked
+  //   }
 
-    analyser.fftSize = 2048
-    const bufferLength = analyser.frequencyBinCount
-    this.dataArray = new Uint8Array(bufferLength)
+  //   analyser.fftSize = 2048
+  //   const bufferLength = analyser.frequencyBinCount
+  //   this.dataArray = new Uint8Array(bufferLength)
 
-    let start = 16,
-      end = 128,
-      smooth = 0.02
+  //   let start = 16,
+  //     end = 128,
+  //     smooth = 0.02
 
-    const updateFrequencyData = () => {
-      analyser.getByteFrequencyData(this.dataArray)
+  //   const updateFrequencyData = () => {
+  //     analyser.getByteFrequencyData(this.dataArray)
 
-      let sum = 0
-      for (let i = start; i < end; i++) {
-        sum += this.dataArray[i]
-      }
-      const average = sum / (end - start)
-      this._nowVolume = this._nowVolume * smooth + average * (1 - smooth)
-    }
+  //     let sum = 0
+  //     for (let i = start; i < end; i++) {
+  //       sum += this.dataArray[i]
+  //     }
+  //     const average = sum / (end - start)
+  //     this._nowVolume = this._nowVolume * smooth + average * (1 - smooth)
+  //   }
 
-    setInterval(updateFrequencyData, 80)
-  }
+  //   setInterval(updateFrequencyData, 80)
+  // }
 
   /**
    * Get current volume
@@ -232,7 +232,7 @@ export class Player {
   }
   set repeatMode(value) {
     this._repeatMode = value
-    window.ipcRenderer?.send(IpcChannels.Repeat, { mode: this._repeatMode })
+    // window.ipcRenderer?.send(IpcChannels.Repeat, { mode: this._repeatMode })
   }
 
   private async _initFM() {
@@ -398,7 +398,7 @@ export class Player {
   }
 
   private async _cacheAudio(audio: string) {
-    if (audio.includes(appName.toLowerCase()) || !window.ipcRenderer) return
+    if (audio.includes(appName.toLowerCase())) return
     const id = Number(new URL(audio).searchParams.get('dash-id'))
     if (isNaN(id) || !id) return
     // audio info
@@ -428,7 +428,7 @@ export class Player {
   private async _loadMoreFMTracks() {
     if (this.fmTrackList.length <= 5) {
       const response = await fetchPersonalFMWithReactQuery()
-      const ids = (response?.data?.map(r => r.id) ?? []).filter(r => !this.fmTrackList.includes(r))
+      const ids = (response?.data?.map((r: { id: any }) => r.id) ?? []).filter((r: number) => !this.fmTrackList.includes(r))
       this.fmTrackList.push(...ids)
     }
   }
@@ -589,7 +589,7 @@ export class Player {
       id,
     }
     this.playAList(
-      playlist.playlist.trackIds.map(t => t.id),
+      playlist.playlist.trackIds.map((t: { id: any }) => t.id),
       autoPlayTrackID
     )
   }
@@ -633,7 +633,7 @@ export class Player {
       id,
     }
     this.playAList(
-      album.songs.map(t => t.id),
+      album.songs.map((t: { id: any }) => t.id),
       autoPlayTrackID
     )
   }
@@ -655,7 +655,7 @@ export class Player {
       id,
     }
     this.playAList(
-      artist.hotSongs.map(t => t.id),
+      artist.hotSongs.map((t: { id: any }) => t.id),
       autoPlayTrackID
     )
   }
@@ -713,15 +713,15 @@ export class Player {
     const metadata = {
       title: track.name,
       artist: track.ar.map(a => a.name).join(', '),
-      album: track.al.name,
+      album: track.al?.name,
       artwork: [
         {
-          src: track.al.picUrl + '?param=256y256',
+          src: track.al?.picUrl + '?param=256y256',
           type: 'image/jpg',
           sizes: '256x256',
         },
         {
-          src: track.al.picUrl + '?param=512y512',
+          src: track.al?.picUrl + '?param=512y512',
           type: 'image/jpg',
           sizes: '512x512',
         },

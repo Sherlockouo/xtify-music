@@ -1,4 +1,4 @@
-import request from '@/web/utils/request'
+import request from '@/utils/request'
 import { FetchUserAccountResponse, RefreshCookieResponse } from '@/shared/api/User'
 
 // 手机号登录

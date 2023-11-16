@@ -1,6 +1,6 @@
-import { fetchAudioSource, fetchTracks } from '@/web/api/track'
-import type {} from '@/web/api/track'
-import reactQueryClient from '@/web/utils/reactQueryClient'
+import { fetchAudioSource, fetchTracks } from '@/api/track'
+import type {} from '@/api/track'
+import reactQueryClient from '@/utils/reactQueryClient'
 import { IpcChannels } from '@/shared/IpcChannels'
 import {
   FetchAudioSourceParams,
@@ -12,20 +12,20 @@ import {
 } from '@/shared/api/Track'
 import { CacheAPIs } from '@/shared/CacheAPIs'
 import { useQuery } from '@tanstack/react-query'
-import settings from '@/web/states/settings'
+import settings from '@/states/settings'
 
 export default function useTracks(params: FetchTracksParams) {
   return useQuery(
     [TrackApiNames.FetchTracks, params],
     async () => {
       // fetch from cache as initial data
-      const cache = await window.ipcRenderer?.invoke(IpcChannels.GetApiCache, {
-        api: CacheAPIs.Track,
-        query: {
-          ids: params.ids.join(','),
-        },
-      })
-      if (cache) return cache
+      // const cache = await window.ipcRenderer?.invoke(IpcChannels.GetApiCache, {
+      //   api: CacheAPIs.Track,
+      //   query: {
+      //     ids: params.ids.join(','),
+      //   },
+      // })
+      // if (cache) return cache
       const len = Math.ceil(params.ids.length / 900)
       const promiseArr = []
       let offset = 0
@@ -63,7 +63,7 @@ export default function useTracks(params: FetchTracksParams) {
         { code: 0, privileges: {} }
       )
 
-      return mergedResponse
+      return mergedResponse as FetchTracksResponse
     },
     {
       enabled: params.ids.length !== 0,
@@ -74,40 +74,40 @@ export default function useTracks(params: FetchTracksParams) {
   )
 }
 
-export function unblock(params: UnblockParam) {
-  return reactQueryClient.fetchQuery(
-    [TrackApiNames.Unblock, params],
-    async () => {
-      // const cache = await window.ipcRenderer?.invoke(IpcChannels.GetApiCache, {
-      //   api: CacheAPIs.Unblock,
-      //   query: {
-      //     track_id: params.track_id,
-      //   },
-      // })
-      // if (cache) return cache as UnblockResponse
-      return unblock(params)
-    },
-    {
-      retry: 4,
-      retryDelay: (retryCount: number) => {
-        return retryCount * 500
-      },
-      staleTime: 86400000,
-    }
-  )
-}
+// export function unblock(params: UnblockParam) {
+//   return reactQueryClient.fetchQuery(
+//     [TrackApiNames.Unblock, params],
+//     async () => {
+//       // const cache = await window.ipcRenderer?.invoke(IpcChannels.GetApiCache, {
+//       //   api: CacheAPIs.Unblock,
+//       //   query: {
+//       //     track_id: params.track_id,
+//       //   },
+//       // })
+//       // if (cache) return cache as UnblockResponse
+//       return unblock(params)
+//     },
+//     {
+//       retry: 4,
+//       retryDelay: (retryCount: number) => {
+//         return retryCount * 500
+//       },
+//       staleTime: 86400000,
+//     }
+//   )
+// }
 
 export function fetchTracksWithReactQuery(params: FetchTracksParams) {
   return reactQueryClient.fetchQuery(
     [TrackApiNames.FetchTracks, params],
     async () => {
-      const cache = await window.ipcRenderer?.invoke(IpcChannels.GetApiCache, {
-        api: CacheAPIs.Track,
-        query: {
-          ids: params.ids.join(','),
-        },
-      })
-      if (cache) return cache as FetchTracksResponse
+      // const cache = await window.ipcRenderer?.invoke(IpcChannels.GetApiCache, {
+      //   api: CacheAPIs.Track,
+      //   query: {
+      //     ids: params.ids.join(','),
+      //   },
+      // })
+      // if (cache) return cache as FetchTracksResponse
       return fetchTracks(params)
     },
     {

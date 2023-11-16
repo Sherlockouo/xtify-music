@@ -1,4 +1,4 @@
-import request from '@/web/utils/request'
+import request from '@/utils/request'
 import {
   FetchPlaylistParams,
   FetchPlaylistResponse,

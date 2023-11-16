@@ -21,9 +21,9 @@ const initUIStates: UIStates = {
   isPauseVideos: false,
 }
 
-window.ipcRenderer
-  ?.invoke(IpcChannels.IsMaximized)
-  .then(isMaximized => (initUIStates.fullscreen = !!isMaximized))
+// window.ipcRenderer
+//   ?.invoke(IpcChannels.IsMaximized)
+//   .then(isMaximized => (initUIStates.fullscreen = !!isMaximized))
 
 const uiStates = proxy<UIStates>(initUIStates)
 export default uiStates

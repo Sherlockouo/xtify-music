@@ -1,12 +1,12 @@
-import { likeAPlaylist } from '@/web/api/playlist'
+import { likeAPlaylist } from '@/api/playlist'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import useUser from './useUser'
 import { IpcChannels } from '@/shared/IpcChannels'
 import { CacheAPIs } from '@/shared/CacheAPIs'
-import { fetchUserPlaylists } from '@/web/api/user'
+import { fetchUserPlaylists } from '@/api/user'
 import { FetchUserPlaylistsResponse, UserApiNames } from '@/shared/api/User'
 import toast from 'react-hot-toast'
-import reactQueryClient from '@/web/utils/reactQueryClient'
+import reactQueryClient from '@/utils/reactQueryClient'
 import { cloneDeep } from 'lodash-es'
 import { FetchPlaylistResponse, PlaylistApiNames } from '@/shared/api/Playlists'
 
@@ -30,18 +30,18 @@ export default function useUserPlaylists() {
       }
 
       const existsQueryData = reactQueryClient.getQueryData(key)
-      if (!existsQueryData) {
-        window.ipcRenderer
-          ?.invoke(IpcChannels.GetApiCache, {
-            api: CacheAPIs.UserPlaylist,
-            query: {
-              uid: params.uid,
-            },
-          })
-          .then(cache => {
-            if (cache) reactQueryClient.setQueryData(key, cache)
-          })
-      }
+      // if (!existsQueryData) {
+      //   window.ipcRenderer
+      //     ?.invoke(IpcChannels.GetApiCache, {
+      //       api: CacheAPIs.UserPlaylist,
+      //       query: {
+      //         uid: params.uid,
+      //       },
+      //     })
+      //     .then(cache => {
+      //       if (cache) reactQueryClient.setQueryData(key, cache)
+      //     })
+      // }
 
       return fetchUserPlaylists(params)
     },

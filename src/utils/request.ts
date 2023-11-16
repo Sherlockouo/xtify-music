@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { logout } from '../api/hooks/useUser'
 
 const baseURL = String(import.meta.env.DEV ? '/netease' : import.meta.env.VITE_APP_NETEASE_API_URL)
 
@@ -9,9 +8,9 @@ const service: AxiosInstance = axios.create({
   timeout: 50000,
 })
 
-service.interceptors.request.use((config: AxiosRequestConfig) => {
-  return config
-})
+// service.interceptors.request.use((config: AxiosRequestConfig) => {
+//   return config
+// })
 
 service.interceptors.response.use(
   (response: AxiosResponse) => {

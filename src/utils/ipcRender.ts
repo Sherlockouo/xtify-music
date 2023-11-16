@@ -19,9 +19,9 @@
 //   return
 // }
 
-// export const syncTheme = async (theme: string) => {
+export const syncTheme = async (theme: string) => {
 //   window.ipcRenderer?.send(IpcChannels.SyncTheme, {
 //     theme: theme,
 //   })
 //   return
-// }
+}

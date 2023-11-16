@@ -1,4 +1,4 @@
-import { fetchUserArtists } from '@/web/api/user'
+import { fetchUserArtists } from '@/api/user'
 import { UserApiNames, FetchUserArtistsResponse } from '@/shared/api/User'
 import { CacheAPIs } from '@/shared/CacheAPIs'
 import { IpcChannels } from '@/shared/IpcChannels'
@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import { likeAArtist } from '../artist'
 import { ArtistApiNames, FetchArtistResponse } from '@/shared/api/Artist'
-import reactQueryClient from '@/web/utils/reactQueryClient'
+import reactQueryClient from '@/utils/reactQueryClient'
 import { cloneDeep } from 'lodash-es'
 
 export default function useUserArtists() {
@@ -15,15 +15,15 @@ export default function useUserArtists() {
     key,
     () => {
       const existsQueryData = reactQueryClient.getQueryData(key)
-      if (!existsQueryData) {
-        window.ipcRenderer
-          ?.invoke(IpcChannels.GetApiCache, {
-            api: CacheAPIs.UserArtists,
-          })
-          .then(cache => {
-            if (cache) reactQueryClient.setQueryData(key, cache)
-          })
-      }
+      // if (!existsQueryData) {
+      //   window.ipcRenderer
+      //     ?.invoke(IpcChannels.GetApiCache, {
+      //       api: CacheAPIs.UserArtists,
+      //     })
+      //     .then(cache => {
+      //       if (cache) reactQueryClient.setQueryData(key, cache)
+      //     })
+      // }
       return fetchUserArtists()
     },
     {

@@ -1,4 +1,4 @@
-import { likeAAlbum } from '@/web/api/album'
+import { likeAAlbum } from '@/api/album'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import useUser from './useUser'
 import { IpcChannels } from '@/shared/IpcChannels'
@@ -6,7 +6,7 @@ import { CacheAPIs } from '@/shared/CacheAPIs'
 import { FetchUserAlbumsParams, UserApiNames, FetchUserAlbumsResponse } from '@/shared/api/User'
 import { fetchUserAlbums } from '../user'
 import toast from 'react-hot-toast'
-import reactQueryClient from '@/web/utils/reactQueryClient'
+import reactQueryClient from '@/utils/reactQueryClient'
 import { cloneDeep } from 'lodash-es'
 import { AlbumApiNames, FetchAlbumResponse } from '@/shared/api/Album'
 
@@ -18,16 +18,16 @@ export default function useUserAlbums(params: FetchUserAlbumsParams = {}) {
     key,
     () => {
       const existsQueryData = reactQueryClient.getQueryData(key)
-      if (!existsQueryData) {
-        window.ipcRenderer
-          ?.invoke(IpcChannels.GetApiCache, {
-            api: CacheAPIs.UserAlbums,
-            query: params,
-          })
-          .then(cache => {
-            if (cache) reactQueryClient.setQueryData(key, cache)
-          })
-      }
+      // if (!existsQueryData) {
+      //   window.ipcRenderer
+      //     ?.invoke(IpcChannels.GetApiCache, {
+      //       api: CacheAPIs.UserAlbums,
+      //       query: params,
+      //     })
+      //     .then(cache => {
+      //       if (cache) reactQueryClient.setQueryData(key, cache)
+      //     })
+      // }
 
       return fetchUserAlbums(params)
     },

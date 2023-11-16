@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "xtify-music",
-    "version": "0.0.0"
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -15,12 +15,18 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "os": {
+        "all": true
+      },
+      "window": {
+        "startDragging": true
       }
     },
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "com.xtify-music",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -36,9 +42,8 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "xtify-music",
-        "width": 800,
-        "height": 600
+        "width": 1440,
+        "height": 800
       }
     ]
   }

@@ -1,5 +1,5 @@
-import { fetchLyric } from '@/web/api/track'
-import reactQueryClient from '@/web/utils/reactQueryClient'
+import { fetchLyric } from '@/api/track'
+import reactQueryClient from '@/utils/reactQueryClient'
 import { FetchLyricParams, TrackApiNames } from '@/shared/api/Track'
 import { CacheAPIs } from '@/shared/CacheAPIs'
 import { IpcChannels } from '@/shared/IpcChannels'
@@ -11,14 +11,14 @@ export default function useLyric(params: FetchLyricParams) {
     key,
     async () => {
       // fetch from cache as initial data
-      const cache = await window.ipcRenderer?.invoke(IpcChannels.GetApiCache, {
-        api: CacheAPIs.Lyric,
-        query: {
-          id: params.id,
-        },
-      })
+      // const cache = await window.ipcRenderer?.invoke(IpcChannels.GetApiCache, {
+      //   api: CacheAPIs.Lyric,
+      //   query: {
+      //     id: params.id,
+      //   },
+      // })
 
-      if (cache) return cache
+      // if (cache) return cache
 
       return fetchLyric(params)
     },

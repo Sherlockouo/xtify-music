@@ -1,9 +1,10 @@
-import Cookies, { CookieAttributes } from 'js-cookie'
+import Cookies from 'js-cookie'
+// import { CookieAttributes } from 'js-cookie'
 
 interface Cookie {
   key: string
   value: string
-  options?: CookieAttributes
+  options?: Cookies.CookieAttributes
 }
 
 export function parseCookies(cookie: string): Cookie[] {

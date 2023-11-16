@@ -1,5 +1,5 @@
-import { fetchPlaylist, fetchTopPlaylist, fetchHQPlaylist } from '@/web/api/playlist'
-import reactQueryClient from '@/web/utils/reactQueryClient'
+import { fetchPlaylist, fetchTopPlaylist, fetchHQPlaylist } from '@/api/playlist'
+import reactQueryClient from '@/utils/reactQueryClient'
 import { IpcChannels } from '@/shared/IpcChannels'
 import { CacheAPIs } from '@/shared/CacheAPIs'
 import {
@@ -23,13 +23,13 @@ const fetchHQ = (params: FetchHQPlaylistParams) => {
   return fetchHQPlaylist(params)
 }
 
-export const fetchFromCache = async (
-  params: FetchPlaylistParams
-): Promise<FetchPlaylistResponse | undefined> =>
-  window.ipcRenderer?.invoke(IpcChannels.GetApiCache, {
-    api: CacheAPIs.Playlist,
-    query: params,
-  })
+// export const fetchFromCache = async (
+//   params: FetchPlaylistParams
+// ): Promise<FetchPlaylistResponse | undefined> =>
+//   window.ipcRenderer?.invoke(IpcChannels.GetApiCache, {
+//     api: CacheAPIs.Playlist,
+//     query: params,
+//   })
 
 export function useTopPlaylist(params: FetchTopPlaylistParams) {
   const key = [PlaylistApiNames.FetchTopPlaylistParams, params]
@@ -80,12 +80,12 @@ export default function usePlaylist(params: FetchPlaylistParams) {
     key,
     async () => {
       // fetch from cache as placeholder
-      fetchFromCache(params).then(cache => {
-        const existsQueryData = reactQueryClient.getQueryData(key)
-        if (!existsQueryData && cache) {
-          reactQueryClient.setQueryData(key, cache)
-        }
-      })
+      // fetchFromCache(params).then(cache => {
+      //   const existsQueryData = reactQueryClient.getQueryData(key)
+      //   if (!existsQueryData && cache) {
+      //     reactQueryClient.setQueryData(key, cache)
+      //   }
+      // })
 
       return fetch(params)
     },
@@ -107,7 +107,7 @@ export function fetchPlaylistWithReactQuery(params: FetchPlaylistParams) {
 }
 
 export async function prefetchPlaylist(params: FetchPlaylistParams) {
-  if (await fetchFromCache(params)) return
+  // if (await fetchFromCache(params)) return
   await reactQueryClient.prefetchQuery(
     [PlaylistApiNames.FetchPlaylist, params],
     () => fetch(params),

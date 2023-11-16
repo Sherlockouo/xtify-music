@@ -7,7 +7,7 @@ import {
   FetchVideoResponse,
   FetchVideoURLResponse,
 } from '@/shared/api/MV'
-import request from '@/web/utils/request'
+import request from '@/utils/request'
 
 // 获取 mv 数据
 export function fetchMV(params: FetchMVParams): Promise<FetchMVResponse> {
