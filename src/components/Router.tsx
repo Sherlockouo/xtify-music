@@ -23,13 +23,13 @@ const Router = () => {
   return (
     // this keeps the UI updates responsive even on slow device and networ
       <AnimatePresence mode='wait'>
-        <Suspense
-          fallback={
-            <div className='iterms-center flex h-full w-full justify-center'>
-              <Loading />
-            </div>
-          }
-        >
+          <Suspense
+            fallback={
+              <div className='iterms-center flex h-full w-full justify-center'>
+                <Loading />
+              </div>
+            }
+          >
           <VideoPlayer />
           <Routes location={location} key={location.pathname}>
             <Route path='/' element={<My />} />

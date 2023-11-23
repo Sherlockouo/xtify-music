@@ -17,7 +17,7 @@ const Info = () => {
               {/* Track Info */}
               <div className='line-clamp-1 text-lg text-black dark:text-white'>{track?.name}</div>
               <ArtistInline
-                artists={track?.ar || []}
+                artists={player.track?.ar || []}
                 className='text-black/30 dark:text-white/30'
                 hoverClassName='hover:text-black/50 dark:hover:text-white/70 transition-colors duration-400'
               />

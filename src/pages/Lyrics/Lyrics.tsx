@@ -10,6 +10,7 @@ import { useScroll, useTransform, motion } from 'framer-motion';
 
 import uiStates from '@/states/uiStates'
 import toast from 'react-hot-toast'
+import persistedUiStates from '@/states/persistedUiStates'
 
 const Lyrics = () => {
   console.log('lyrics load ');
@@ -21,7 +22,7 @@ const Lyrics = () => {
   const lyricsResponse = lyricsRes.data
   const { lyric: lyrics, tlyric: tlyric } = lyricParser(lyricsResponse)
   const { progress } = useSnapshot(player)
-  const { lyricsBlur } = useSnapshot(uiStates)
+  const { lyricsBlur } = useSnapshot(persistedUiStates)
   const [isHovered, setIsHovered] = useState(false)
 
   const handleMouseEnter = () => {

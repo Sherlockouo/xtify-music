@@ -28,16 +28,6 @@ export default defineConfig(async () => ({
       symbolId: 'icon-[name]',
     }),
   ],
-  build: {
-    target: 'esnext',
-    sourcemap: true,
-    outDir: './dist',
-    emptyOutDir: true,
-    rollupOptions: {
-      plugins: [
-      ],
-    },
-  },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

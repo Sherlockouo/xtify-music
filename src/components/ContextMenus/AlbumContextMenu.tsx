@@ -27,7 +27,7 @@ const AlbumContextMenu = () => {
     <AnimatePresence>
       {cursorPosition && type === 'album' && dataSourceID && target && (
         <BasicContextMenu
-          target={target}
+          target={contextMenus.target}
           cursorPosition={cursorPosition}
           onClose={closeContextMenu}
           options={options}

@@ -6,6 +6,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "analyze:css": "npx windicss-analysis",
+    "analyze:js": "yarn build && open-cli bundle-stats-renderer.html",
     "tauri": "tauri"
   },
   "dependencies": {

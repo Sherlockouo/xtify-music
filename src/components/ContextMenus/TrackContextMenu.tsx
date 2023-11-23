@@ -71,7 +71,7 @@ const TrackContextMenu = () => {
     <AnimatePresence>
       {type === 'track' && dataSourceID && target && cursorPosition && (
         <BasicContextMenu
-          target={target}
+          target={contextMenus.target}
           cursorPosition={cursorPosition}
           onClose={closeContextMenu}
           options={options}

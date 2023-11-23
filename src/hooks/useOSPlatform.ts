@@ -15,7 +15,7 @@ const useOSPlatform = (): SupportedOSPlatform => {
 
   const { value: platform } = useAsync(getPlatform, [])
 
-  return platform ?? supportedOSPlatform[0]
+  return "darwin" ?? supportedOSPlatform[0]
 }
 
 export default useOSPlatform

@@ -51,7 +51,7 @@ const ScrollPagination = ({
     if (isFetching) {
       // 获取数据
       getData(current, 100)
-        .then(({ items, hasMore }) => {
+        .then(({ hasMore }) => {
           if (hasMore) {
             setIsFetching(false) // 设置为获取数据完成的状态
           } else {

@@ -89,6 +89,10 @@ export class Player {
     // window.ipcRenderer?.send(IpcChannels.Repeat, { mode: this._repeatMode })
   }
 
+  get _trackList():TrackID[]{
+    return this.trackList
+  }
+
   get howler() {
     return _howler
   }

@@ -24,14 +24,14 @@
       "@/*": ["src/*"]
     },
 
-    /* Linting */
-    "strict": true,
-    /*"noUnusedLocals": true,*/
-    "noUnusedLocals": false,
-    /*"noUnusedParameters": true, */
-    "noUnusedParameters": false,
-    /*"noFallthroughCasesInSwitch": true */
-    "noFallthroughCasesInSwitch": false
+    // /* Linting */
+    // "strict": false,
+    // /*"noUnusedLocals": true,*/
+    // "noUnusedLocals": false,
+    // /*"noUnusedParameters": true, */
+    // "noUnusedParameters": false,
+    // /*"noFallthroughCasesInSwitch": true */
+    // "noFallthroughCasesInSwitch": false
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

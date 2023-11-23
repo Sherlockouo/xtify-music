@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
-const baseURL = String(import.meta.env.DEV ? '/netease' : import.meta.env.VITE_APP_NETEASE_API_URL)
+const baseURL = "http://127.0.0.1:35530/netease"
+// + String(import.meta.env.DEV ? '/netease' : import.meta.env.VITE_APP_NETEASE_API_URL)
 
 const service: AxiosInstance = axios.create({
   baseURL,

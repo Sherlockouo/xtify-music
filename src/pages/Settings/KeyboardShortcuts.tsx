@@ -277,11 +277,11 @@ const ShortcutItemBindings: FC<{
       <td className='px-2 text-left font-normal'>{name}</td>
       <td className='text-center font-normal'>
         {hideLocal ? null : (
-          <ShortcutBindingInput value={keyboardShortcuts[fnKey][0]} onChange={updateBinding(0)} />
+          <ShortcutBindingInput value={[...(keyboardShortcuts[fnKey][0])]} onChange={updateBinding(0)} />
         )}
       </td>
       <td className='text-center font-normal'>
-        <ShortcutBindingInput value={keyboardShortcuts[fnKey][1]} onChange={updateBinding(1)} />
+        <ShortcutBindingInput value={[...(keyboardShortcuts[fnKey][1])]} onChange={updateBinding(1)} />
       </td>
     </tr>
   )

@@ -186,10 +186,10 @@ const Track = ({
 }
 
 const TrackList = ({ className }: { className?: string }) => {
-  const { trackList, trackIndex, state, fmTrackList, fmTrack } = useSnapshot(player)
+  const { trackIndex, state } = useSnapshot(player)
   // track mode true/false
   const trackMode = player.mode == Mode.TrackList
-  const { data: tracksRaw } = useTracks({ ids: trackMode ? trackList : fmTrackList })
+  const { data: tracksRaw } = useTracks({ ids: trackMode ? player.trackList : player.fmTrackList })
   const tracks = tracksRaw?.songs || []
   const { height } = useWindowSize()
   const isMobile = useIsMobile()

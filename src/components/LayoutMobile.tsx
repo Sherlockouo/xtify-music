@@ -52,8 +52,8 @@ const LayoutMobile = () => {
               >
                 <Player
                   playOrPause={() => {
-                    playerSnapshot.state =
-                      playerSnapshot.state == State.Playing ? State.Paused : State.Playing
+                    player.state =
+                      player.state == State.Playing ? State.Paused : State.Playing
                   }}
                 />
               </div>

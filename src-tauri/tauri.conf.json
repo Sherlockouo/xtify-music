@@ -19,6 +19,11 @@
       "os": {
         "all": true
       },
+      "http": {
+        "all": true,
+        "request": true,
+        "scope": ["http://**", "https://**"]
+    },
       "window": {
         "startDragging": true
       }

@@ -15,17 +15,16 @@ import ArtistInline from './ArtistsInLine'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const LikeButton = () => {
-  const { track } = useSnapshot(player)
   const { data: likedIDs } = useUserLikedTracksIDs()
 
-  const isLiked = !!likedIDs?.ids?.find(id => id === track?.id)
+  const isLiked = !!likedIDs?.ids?.find(id => id === player.track?.id)
 
   const likeATrack = useMutationLikeATrack()
 
   return (
     <button
       className='flex h-full items-center'
-      onClick={() => track?.id && likeATrack.mutateAsync(track.id)}
+      onClick={() => player.track?.id && likeATrack.mutateAsync(player.track.id)}
     >
       <Icon name={isLiked ? 'heart' : 'heart-outline'} className='h-7 w-7 text-white/10' />
     </button>
@@ -41,8 +40,8 @@ const PlayerMobile = ({
   ipcPrev?: () => void
   ipcNext?: () => void
 }) => {
-  const { track, state } = useSnapshot(player)
-  const bgColor = useCoverColor(track?.al?.picUrl ?? '')
+  const { state } = useSnapshot(player)
+  const bgColor = useCoverColor(player.track?.al?.picUrl ?? '')
   const [locked, setLocked] = useState(false)
   useLockBodyScroll(locked)
   const { mobileShowPlayingNext } = useSnapshot(uiStates)
@@ -101,16 +100,16 @@ const PlayerMobile = ({
       <div
         className='h-full py-2.5'
         onClick={() => {
-          navigate(`/album/${track?.al?.id}`)
+          navigate(`/album/${player.track?.al?.id}`)
         }}
       >
         <Image
-          src={resizeImage(track?.al?.picUrl || '', 'sm')}
+          src={resizeImage(player.track?.al?.picUrl || '', 'sm')}
           className='z-10 aspect-square h-full rounded-lg'
         />
       </div>
 
-      {/* Track info */}
+      {/* player.track info */}
       <div className='relative flex h-full flex-grow items-center overflow-hidden px-3'>
         <motion.div
           drag='x'
@@ -121,11 +120,11 @@ const PlayerMobile = ({
           className='flex h-full flex-grow items-center '
         >
           <div className='flex-shrink-0'>
-            <div className='line-clamp-1 text-14 font-bold text-white'>{track?.name}</div>
+            <div className='line-clamp-1 text-14 font-bold text-white'>{player.track?.name}</div>
             <div className='mt-2 h-px w-2/5 bg-black/10 dark:bg-white/10'></div>
             <div className='line-clamp-1 mt-1 text-12 font-bold text-white/60'>
               <ArtistInline
-                artists={track?.ar || []}
+                artists={player.track?.ar || []}
                 className='text-black/30 dark:text-white/30'
                 hoverClassName='hover:text-black/50 dark:hover:text-white/70 transition-colors duration-400'
               />

@@ -27,7 +27,7 @@ export function parseCookies(cookie: string): Cookie[] {
           ...tmpCookie?.options,
           expires: expires,
         },
-      }
+      } as Cookie
       return
     }
 
@@ -38,7 +38,7 @@ export function parseCookies(cookie: string): Cookie[] {
           ...tmpCookie?.options,
           path: value,
         },
-      }
+      } as Cookie
       return
     }
 

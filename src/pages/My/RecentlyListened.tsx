@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import ArtistRow from '@/components/ArtistRow'
 import { useTranslation } from 'react-i18next'
 import { AnimatePresence, motion } from 'framer-motion'
+import { FetchArtistResponse } from '@/shared/api/Artist'
 
 const RecentlyListened = () => {
   const { t } = useTranslation()
@@ -34,7 +35,7 @@ const RecentlyListened = () => {
   }, [listenedRecords])
   const { data: recentListenedArtists, isLoading: isLoadingArtistsDetail } =
     useArtists(recentListenedArtistsIDs)
-  const artists = useMemo(() => recentListenedArtists?.map(a => a.artist), [recentListenedArtists])
+  const artists = useMemo(() => recentListenedArtists?.map((a:FetchArtistResponse) => a.artist), [recentListenedArtists])
 
   const show = useMemo(() => {
     if (listenedRecords?.weekData?.length === 0) return false

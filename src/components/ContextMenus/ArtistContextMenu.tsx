@@ -26,7 +26,7 @@ const ArtistContextMenu = () => {
     <AnimatePresence>
       {cursorPosition && type === 'artist' && dataSourceID && target && (
         <BasicContextMenu
-          target={target}
+          target={contextMenus.target}
           cursorPosition={cursorPosition}
           onClose={closeContextMenu}
           options={options}
